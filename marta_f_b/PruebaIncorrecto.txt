@@ -1,0 +1,6 @@
+pruebaMala;
+var fac1, fac2:int;
+{
+	fac1 = 2;
+	fac2 = fac1 * 5;
+}

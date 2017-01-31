@@ -1,0 +1,23 @@
+140  6
+2
+3
+4
+id_1
+<
+17.44
+"hola mundo"
+int
+float
+*
+/
+print
+=
+:
+program
++
+-
+if
+else
+()
+{}
+;

@@ -1,0 +1,28 @@
+12
+var_uno
+14.5
+"hola mundo"
+int
+float
+<
+>
+*
+/
+print
+=
+:
+program
++
+-
+{}
+()
+;
+ 
+
+	
+
+if else
+,
+var
+	
+
