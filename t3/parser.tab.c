@@ -62,17 +62,15 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "parser.y" /* yacc.c:339  */
+#line 9 "parser.y" /* yacc.c:339  */
 
-	#include<stdlib.h>
-	#include <stdio.h>
-	extern int yylex();
-	extern int yylineno,yychar;
-	extern char *yytext;
-	extern FILE *yyin;
+	#include <stdio.h>	   // funciones estandar (printf, etc.)
+	extern FILE *yyin;     // variable para leer un archivo
+	extern char *yytext;   // texto que se esta analizando
+	extern int   yylex();  // estructura para acceder a la tabla de tokens
+	extern int   yylineno; // linea que se esta analizando 
 
-
-#line 76 "parser.tab.c" /* yacc.c:339  */
+#line 74 "parser.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -133,13 +131,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 11 "parser.y" /* yacc.c:355  */
+#line 20 "parser.y" /* yacc.c:355  */
 
-	char *ivalue;
-	int integer_t;
-	float float_t;
+	char *str;       // para determinar cadenas de caracteres
+	int   entero;    // para determinar numeros enteros
+	float flotante;  // para determinar numeros de punto flotante
 
-#line 143 "parser.tab.c" /* yacc.c:355  */
+#line 141 "parser.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -156,7 +154,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 160 "parser.tab.c" /* yacc.c:358  */
+#line 158 "parser.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -455,10 +453,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    46,    50,    52,    54,    55,    56,    60,
-      62,    62,    66,    66,    66,    70,    74,    76,    76,    76,
-      76,    80,    80,    84,    84,    88,    88,    92,    92,    92,
-      96,    97,    98,   102,   103,   104
+       0,    56,    56,    57,    61,    63,    65,    66,    67,    71,
+      73,    73,    77,    77,    77,    81,    85,    87,    87,    87,
+      87,    91,    91,    95,    95,    99,    99,   103,   103,   103,
+     107,   108,   109,   113,   114,   115
 };
 #endif
 
@@ -471,9 +469,9 @@ static const char *const yytname[] =
   "TIPO", "ID", "ENTERO", "FLOTANTE", "EXPRESION", "PARENTESIS_IZQ",
   "PARENTESIS_DER", "STRING", "TERMINO", "ASIGNACION", "EXP",
   "CORCHETE_IZQ", "CORCHETE_DER", "SEPARATOR", "COMA", "PUNTO_COMA", "VAR",
-  "$accept", "Program", "Vars", "Vars2", "Vars3", "Bloque", "Bloque2",
-  "Estatuto", "Asignacion", "Escritura", "Escritura2", "Expresion", "Exp",
-  "Termino", "Var_cte", "Condicion", "Condicion2", "Factor", YY_NULLPTR
+  "$accept", "program", "vars", "vars2", "vars3", "bloque", "bloque2",
+  "estatuto", "asignacion", "escritura", "escritura2", "expresion", "exp",
+  "termino", "var_cte", "condicion", "condicion2", "factor", YY_NULLPTR
 };
 #endif
 
@@ -1269,7 +1267,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1273 "parser.tab.c" /* yacc.c:1646  */
+#line 1271 "parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1497,18 +1495,26 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 106 "parser.y" /* yacc.c:1906  */
+#line 117 "parser.y" /* yacc.c:1906  */
 
 
-// Desplegar error
-int yyerror(char *s){
-	printf("El texto %s en la linea %d no es correcto. NO APROPIADO", yytext, yylineno);
+/*
+	yyerror
+	Despliega un mensaje de error en caso de que se encuentre
+	alguna irregularidad en el scanner o en el parser.
+*/
+int yyerror(char *s) {
+	printf("Se encontro un error en la linea %d: %s\n", yylineno, yytext);
 	exit(1);
 }
-// Correr los archivos de prueba
- int main (int argc, char *argv[]){
+/*
+	main
+	Funcion principal que lee un archivo de entrada y lo analiza.
+	Si todo funciona correctamente se despliega un mensaje de finalizacion.
+*/
+int main (int argc, char *argv[]) {
 	yyin = fopen(argv[1], "r");
 	yyparse();
-	printf("Trabajando correctamente - APROPIADO");
+	printf("Finalizo sin errores.\n");
 	return 1;
 }

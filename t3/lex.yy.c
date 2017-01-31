@@ -538,10 +538,17 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "scanner.l"
-#line 5 "scanner.l"
-//#include "valores.h"
+/*
+	Jose Gonzalez Ayerdi - A01036121
+	3/02/17
+	Tarea 3, Disenio de Compiladores
+	Lexico para el lenguaje MyLittleDuck2017
+	Expresiones regulares para el análisis lexico con Flex
+*/
+#line 10 "scanner.l"
+//#include "valores.h" // archivo para prbar el analizador lexico
 #include "parser.tab.c"
-#line 545 "lex.yy.c"
+#line 552 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -759,12 +766,10 @@ YY_DECL
 		}
 
 	{
-#line 9 "scanner.l"
+#line 15 "scanner.l"
 
 
-
-
-#line 768 "lex.yy.c"
+#line 773 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -833,117 +838,117 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 13 "scanner.l"
-return IF;
+#line 17 "scanner.l"
+{return IF;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 14 "scanner.l"
-return ELSE;
+#line 18 "scanner.l"
+{return ELSE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "scanner.l"
-return PROGRAM;
+#line 19 "scanner.l"
+{return PROGRAM;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "scanner.l"
-return ESCRITURA;
+#line 20 "scanner.l"
+{return ESCRITURA;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "scanner.l"
-return VAR;
+#line 21 "scanner.l"
+{return VAR;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "scanner.l"
-return TIPO;
+#line 22 "scanner.l"
+{return TIPO;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "scanner.l"
-return ID;
+#line 23 "scanner.l"
+{return ID;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "scanner.l"
-return ENTERO;
+#line 24 "scanner.l"
+{return ENTERO;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "scanner.l"
-return FLOTANTE;
+#line 25 "scanner.l"
+{return FLOTANTE;}
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 22 "scanner.l"
-;
+#line 26 "scanner.l"
+{;} // se ignoran los espacios en blanco
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "scanner.l"
-return EXPRESION;
+#line 27 "scanner.l"
+{return EXPRESION;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 24 "scanner.l"
-return PARENTESIS_IZQ;
+#line 28 "scanner.l"
+{return PARENTESIS_IZQ;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "scanner.l"
-return PARENTESIS_DER;
+#line 29 "scanner.l"
+{return PARENTESIS_DER;}
 	YY_BREAK
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 26 "scanner.l"
-return STRING;
+#line 30 "scanner.l"
+{return STRING;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 27 "scanner.l"
-return TERMINO;
+#line 31 "scanner.l"
+{return TERMINO;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 28 "scanner.l"
-return ASIGNACION;
+#line 32 "scanner.l"
+{return ASIGNACION;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "scanner.l"
-return EXP;
+#line 33 "scanner.l"
+{return EXP;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 30 "scanner.l"
-return CORCHETE_IZQ;
+#line 34 "scanner.l"
+{return CORCHETE_IZQ;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 31 "scanner.l"
-return CORCHETE_DER;
+#line 35 "scanner.l"
+{return CORCHETE_DER;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 32 "scanner.l"
-return COMA;
+#line 36 "scanner.l"
+{return COMA;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 33 "scanner.l"
-return PUNTO_COMA;
+#line 37 "scanner.l"
+{return PUNTO_COMA;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 35 "scanner.l"
+#line 39 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 947 "lex.yy.c"
+#line 952 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1956,11 +1961,10 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 35 "scanner.l"
+#line 39 "scanner.l"
 
 
 
-/* Regresa 0 o 1 dependiendo si hay más entradas o no */
 int yywrap(void) {
 	return 1;
 } 

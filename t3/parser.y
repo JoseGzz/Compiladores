@@ -1,33 +1,44 @@
+/*
+	Jose Gonzalez Ayerdi - A01036121
+	3/02/17
+	Tarea 3, Disenio de Compiladores
+	Sintaxis para el lenguaje MyLittleDuck2017
+	Gramatica regular para el análisis sintactico con Bison
+*/
+
 %{
-//	#include <stdlib.h>
-	#include <stdio.h>
-	extern int yylex();
-	extern int yylineno
-	extern int yychar;
-	extern char *yytext;
-	extern FILE *yyin;
+	#include <stdio.h>	   // funciones estandar (printf, etc.)
+	extern FILE *yyin;     // variable para leer un archivo
+	extern char *yytext;   // texto que se esta analizando
+	extern int   yylex();  // estructura para acceder a la tabla de tokens
+	extern int   yylineno; // linea que se esta analizando 
 %}
 
+/*
+	Estructura union para determinar los tipos de tokens posteriormente
+*/
 %union {
-	char *ivalue;
-	int integer_t;
-	float float_t;
+	char *str;       // para determinar cadenas de caracteres
+	int   entero;    // para determinar numeros enteros
+	float flotante;  // para determinar numeros de punto flotante
 };
 
-// Declaracion de Tokens
-// Incluye los cambios hechos en las expresiones regulares 
+/*
+	Se establece la lista de tokens
+	que se usara en el analisis gramatical.
+*/
 %token IF
 %token ELSE
 %token PROGRAM
 %token ESCRITURA
 %token TIPO
-%token <ivalue> ID
-%token <integer_t>ENTERO 
-%token <float_t>FLOTANTE
+%token <str> ID
+%token <entero>ENTERO 
+%token <flotante>FLOTANTE
 %token EXPRESION
 %token PARENTESIS_IZQ
 %token PARENTESIS_DER
-%token <ivalue> STRING 
+%token <str> STRING 
 %token TERMINO
 %token ASIGNACION
 %token EXP
@@ -38,82 +49,90 @@
 %token PUNTO_COMA
 %token VAR
 
-%start Program
+%start program
 %%
 
-Program:
-	PROGRAM ID PUNTO_COMA Vars Bloque
-	| PROGRAM ID PUNTO_COMA Bloque;
+program:
+	PROGRAM ID PUNTO_COMA vars bloque
+	| PROGRAM ID PUNTO_COMA bloque;
 
 //------------------------
-Vars:
-	VAR Vars2;
-Vars2:
-	ID Vars3;
-Vars3:
-	COMA Vars2
-	| ASIGNACION TIPO PUNTO_COMA Vars2
+vars:
+	VAR vars2;
+vars2:
+	ID vars3;
+vars3:
+	COMA vars2
+	| ASIGNACION TIPO PUNTO_COMA vars2
 	| ASIGNACION TIPO PUNTO_COMA;
 
 //------------------------
-Bloque:
-	CORCHETE_IZQ Bloque2 CORCHETE_DER;
-Bloque2:
-	Estatuto | Estatuto Bloque2;
+bloque:
+	CORCHETE_IZQ bloque2 CORCHETE_DER;
+bloque2:
+	estatuto | estatuto bloque2;
 
 //------------------------
-Estatuto:
-	Asignacion | Condicion | Escritura;
+estatuto:
+	asignacion | condicion | escritura;
 
 //------------------------
-Asignacion:
-	ID ASIGNACION Expresion PUNTO_COMA;
+asignacion:
+	ID ASIGNACION expresion PUNTO_COMA;
 
 //------------------------
-Escritura:
-	ESCRITURA PARENTESIS_IZQ Escritura2 PARENTESIS_DER PUNTO_COMA;
-Escritura2: 
-	Expresion | Expresion COMA Escritura2 | STRING | STRING COMA Escritura2;
+escritura:
+	ESCRITURA PARENTESIS_IZQ escritura2 PARENTESIS_DER PUNTO_COMA;
+escritura2: 
+	expresion | expresion COMA escritura2 | STRING | STRING COMA escritura2;
 
 //------------------------
-Expresion:
-	Exp | Exp EXPRESION Exp;
+expresion:
+	exp | exp EXPRESION exp;
 
 //------------------------
-Exp:
-	Termino | Termino EXP Termino;
+exp:
+	termino | termino EXP termino;
 
 //------------------------
-Termino:
-	Factor | Factor TERMINO Factor;
+termino:
+	factor | factor TERMINO factor;
 
 //------------------------
-Var_cte:
+var_cte:
 	ID | ENTERO | FLOTANTE;
 
 //------------------------
-Condicion:
-	IF PARENTESIS_IZQ Expresion PARENTESIS_DER Condicion2
-Condicion2: Bloque PUNTO_COMA
-			| Bloque ELSE Bloque PUNTO_COMA;
+condicion:
+	IF PARENTESIS_IZQ expresion PARENTESIS_DER condicion2
+condicion2: bloque PUNTO_COMA
+			| bloque ELSE bloque PUNTO_COMA;
 
 //------------------------
-Factor:
-	 PARENTESIS_IZQ Expresion PARENTESIS_DER
-	 | Var_cte	
-	 | EXP Var_cte;
+factor:
+	 PARENTESIS_IZQ expresion PARENTESIS_DER
+	 | var_cte	
+	 | EXP var_cte;
 
 %%
 
-// Desplegar error
-int yyerror(char *s){
-	printf("El texto %s en la linea %d no es correcto. NO APROPIADO", yytext, yylineno);
+/*
+	yyerror
+	Despliega un mensaje de error en caso de que se encuentre
+	alguna irregularidad en el scanner o en el parser.
+*/
+int yyerror(char *s) {
+	printf("Se encontro un error en la linea %d: %s\n", yylineno, yytext);
 	exit(1);
 }
-// Correr los archivos de prueba
- int main (int argc, char *argv[]){
+/*
+	main
+	Funcion principal que lee un archivo de entrada y lo analiza.
+	Si todo funciona correctamente se despliega un mensaje de finalizacion.
+*/
+int main (int argc, char *argv[]) {
 	yyin = fopen(argv[1], "r");
 	yyparse();
-	printf("Trabajando correctamente - APROPIADO");
+	printf("Finalizo sin errores.\n");
 	return 1;
 }
