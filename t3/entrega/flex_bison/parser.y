@@ -113,7 +113,11 @@ factor:
 	alguna irregularidad en el scanner o en el parser.
 */
 int yyerror(char *s) {
-	printf("Error de sintaxis en la linea %d: %s\n", yylineno, yytext);
+	if(strcmp("syntax error", s) != 0) {
+		fprintf(stderr, "Error léxico en línea %d: %s.\n", yylineno, s);
+	} else {
+		fprintf(stderr, "Error de sintaxis en línea %d.\n", yylineno);
+	}
 	exit(1);
 }
 /*

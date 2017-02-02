@@ -1,0 +1,13 @@
+program prueba;
+	var a, b, c, d:int; {
+	a = 10;
+	b = 9;
+	c = 8;
+	print("a+b+c");	
+
+	if (a+b) {
+		d = 9;
+	} else {
+		d = 8;
+	};
+}

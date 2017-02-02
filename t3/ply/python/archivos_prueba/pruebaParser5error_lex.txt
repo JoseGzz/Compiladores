@@ -1,0 +1,4 @@
+program prueba; {
+	a = 10;
+.
+}

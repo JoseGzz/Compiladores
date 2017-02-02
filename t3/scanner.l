@@ -7,10 +7,10 @@
 */
 
 %{
-//#include "valores.h" // archivo para prbar el analizador lexico
-#include "parser.tab.c"
+//#include "valores.h"   // archivo para prbar el analizador lexico
+#include "parser.tab.c" // es necesario comentar esta linea para probar
 %}
-%option yylineno
+%option yylineno // da seguimiento a la linea que se esta analizando
 
 %%
 
@@ -40,4 +40,4 @@
 
 int yywrap(void) {
 	return 1;
-} 
+}
